@@ -2,23 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>group.msg.at.cloud</groupId>
-    <artifactId>cnj-persistence-sql-backend-test</artifactId>
+    <artifactId>cnj-persistence-sql-resources</artifactId>
     <version>${revision}${sha1}${changelist}</version>
-    <packaging>jar</packaging>
-    <description>System tests running on cloud native Java backend based exposing REST endpoints</description>
+    <packaging>pom</packaging>
+    <description>All attached resources required for the Cloud Native Persistence Showcases</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!-- runtime related properties -->
-        <java.version>11</java.version>
-        <javaee.version>8.0.1</javaee.version>
-        <!-- common logging dependencies -->
-        <slf4j.version>1.7.30</slf4j.version>
-        <log4j.slf4j.version>2.13.0</log4j.slf4j.version>
-        <!-- common test dependencies -->
-        <junit.version>5.6.0</junit.version>
-        <restassured.version>3.3.0</restassured.version>
-        <cnj.common.test.version>1.4.0</cnj.common.test.version>
         <!-- pinning versions of common maven plugins -->
         <maven.clean.plugin.version>3.1.0</maven.clean.plugin.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -33,74 +23,17 @@
         <maven.site.plugin.version>3.8.2</maven.site.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
+        <!-- pinning versions of application type specific maven plugins -->
+        <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
+        <!-- pinning versions of cloud native specific maven plugins -->
+        <maven.compose.plugin.version>1.0.0</maven.compose.plugin.version>
+        <maven.docker.plugin.version>0.33.0</maven.docker.plugin.version>
+        <maven.helm.plugin.version>2.0.1</maven.helm.plugin.version>
         <!-- new Maven version management -->
-        <revision>3.0.0</revision>
+        <revision>4.0.0</revision>
         <sha1></sha1>
         <changelist></changelist>
     </properties>
-    <dependencyManagement>
-        <dependencies>
-            <!-- Java EE 8 Web Profile API -->
-            <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-web-api</artifactId>
-                <version>${javaee.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <!-- Test runtime dependencies -->
-            <!-- JUnit 5.x -->
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>${junit.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- new dependencies for REST-based system tests -->
-            <dependency>
-                <groupId>io.rest-assured</groupId>
-                <artifactId>rest-assured</artifactId>
-                <version>3.3.0</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-    <dependencies>
-        <!-- =========================== -->
-        <!-- execution time dependencies -->
-        <!-- =========================== -->
-        <!-- common dependencies section -->
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!-- since we are providing standalone test classes we need JUnit and RestAssured int the runtime section !-->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>group.msg.at.cloud.common</groupId>
-            <artifactId>cnj-common-test</artifactId>
-            <version>${cnj.common.test.version}</version>
-        </dependency>
-        <!-- showcase specific section -->
-        <!-- =========================== -->
-        <!-- test time dependencies      -->
-        <!-- =========================== -->
-    </dependencies>
     <build>
         <pluginManagement>
             <plugins>
@@ -137,8 +70,8 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${maven.jar.plugin.version}</version>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven.failsafe.plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -164,6 +97,31 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
                     <version>${maven.flatten.plugin.version}</version>
+                </plugin>
+                <!-- application type specific maven plugins section -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven.war.plugin.version}</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+                <!-- cloud native specific maven plugins section -->
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${maven.docker.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>group.msg.at.cloud.tools</groupId>
+                    <artifactId>compose-maven-plugin</artifactId>
+                    <version>${maven.compose.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>group.msg.at.cloud.tools</groupId>
+                    <artifactId>helm-maven-plugin</artifactId>
+                    <version>${maven.helm.plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -217,17 +175,77 @@
         </plugins>
     </build>
     <profiles>
+        <!-- profile pre-commit-stage representing pre-commit-stage of local build -->
         <profile>
             <id>pre-commit-stage</id>
-            <build>
-                <plugins>
-                </plugins>
-            </build>
         </profile>
+        <!-- profile commit-stage representing commit-stage of CI build -->
         <profile>
             <id>commit-stage</id>
+        </profile>
+        <!-- profile integration-test-stage representing integration-test-stage of CI build -->
+        <profile>
+            <id>integration-test-stage</id>
+            <properties>
+                <k8s.cluster.namespace>cloudtrain-int</k8s.cluster.namespace>
+            </properties>
             <build>
                 <plugins>
+                    <!-- copy resources for helm deployment applying filtering -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-helm-resources</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.basedir}/src/main/helm/${project.artifactId}</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                    <outputDirectory>${project.build.directory}/helm-resources/${project.artifactId}</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- install/upgrade helm release before running tests; delete helm release after running tests -->
+                    <plugin>
+                        <groupId>group.msg.at.cloud.tools</groupId>
+                        <artifactId>helm-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>helm-dependency-update</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>dependency-update</goal>
+                                </goals>
+                                <configuration>
+                                    <chartDirectory>${project.build.directory}/helm-resources/${project.artifactId}</chartDirectory>
+                                    <debug>true</debug>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>helm-install-resources</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                                <configuration>
+                                    <chartDirectory>${project.build.directory}/helm-resources/${project.artifactId}</chartDirectory>
+                                    <releaseName>${project.artifactId}</releaseName>
+                                    <namespace>${k8s.cluster.namespace}</namespace>
+                                    <debug>true</debug>
+                                    <timeout>90s</timeout>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>

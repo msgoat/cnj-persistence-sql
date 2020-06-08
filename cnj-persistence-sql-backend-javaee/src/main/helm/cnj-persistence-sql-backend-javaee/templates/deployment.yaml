@@ -43,17 +43,14 @@ spec:
             - name: MP_JWT_VERIFY_ISSUER
               value: {{ .Values.mp.jwt.verifyIssuer | quote }}
             - name: POSTGRES_DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.database.postgres.secret.name }}
-                  key: {{ .Values.database.postgres.secret.keys.user }}
+              value: {{ .Values.database.postgres.user }}
             - name: POSTGRES_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.database.postgres.secret.name }}
                   key: {{ .Values.database.postgres.secret.keys.password }}
             - name: POSTGRES_DB_NAME
-              value: {{ .Values.database.postgres.name }}
+              value: {{ .Values.database.postgres.database }}
             - name: POSTGRES_DB_HOST
               value: {{ .Values.database.postgres.host }}
             - name: POSTGRES_DB_PORT
