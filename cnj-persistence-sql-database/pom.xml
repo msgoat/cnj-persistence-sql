@@ -9,10 +9,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <junit.version>5.3.2</junit.version>
         <common.persistence.jpa.version>1.0.2</common.persistence.jpa.version>
-        <docker.registry.name>docker.at.automotive.msg.team</docker.registry.name>
+        <docker.registry.name>docker.at41tools.k8s.aws.msgoat.eu</docker.registry.name>
         <docker.organization.name>cloudtrain</docker.organization.name>
         <docker.image.name>${docker.registry.name}/${docker.organization.name}/${project.artifactId}</docker.image.name>
         <docker.removeMode>all</docker.removeMode>
@@ -37,7 +37,7 @@
         <maven.helm.plugin.version>1.0.0</maven.helm.plugin.version>
         <helm.tillerNamespace>sys-tiller</helm.tillerNamespace>
         <!-- new Maven version management -->
-        <revision>2.0.0</revision>
+        <revision>3.0.0</revision>
         <sha1></sha1>
         <changelist></changelist>
     </properties>
@@ -72,12 +72,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- common persistence support -->
-            <dependency>
-                <groupId>group.msg.at.cloud.common</groupId>
-                <artifactId>cnj-common-persistence-jpa</artifactId>
-                <version>${common.persistence.jpa.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -99,10 +93,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>group.msg.at.cloud.common</groupId>
-            <artifactId>cnj-common-persistence-jpa</artifactId>
         </dependency>
         <!-- Payara Jakarta EE 8 runtime for testing purposes -->
         <dependency>
@@ -127,12 +117,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>group.msg.at.cloud</groupId>
-            <artifactId>cnj-persistence-sql-backend-test</artifactId>
-            <version>1.0.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgres.jdbc.version}</version>
@@ -151,8 +135,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven.compiler.plugin.version}</version>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
                         <parameters>true</parameters>
                     </configuration>
                 </plugin>

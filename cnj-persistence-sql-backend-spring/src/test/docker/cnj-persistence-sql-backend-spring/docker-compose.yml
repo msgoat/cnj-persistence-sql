@@ -21,25 +21,19 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
   backend:
-    image: docker.at.automotive.msg.team/cloudtrain/cnj-persistence-sql-backend-spring:latest
+    image: ${docker.image.name}:${project.version}
     ports:
-      - "8080:8080"
+      - "38080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: cloud
       CNAP_CLOUD: openshift
-      KEYCLOAK_REALM: "cloudtrain"
-      KEYCLOAK_AUTH_SERVER_URL: "http://k8sapps.at.automotive.msg.team/auth"
-      KEYCLOAK_SSL_REQUIRED: "none"
-      KEYCLOAK_RESOURCE: "cnj-cloudtrain"
-      KEYCLOAK_CREDENTIALS_SECRET: "5268cc21-a423-48cc-8082-4930b070354e"
-      POSTGRES_DB_USER: postgres
-      POSTGRES_DB_PASSWORD: changeit
-      POSTGRES_DB_NAME: cloudtrain
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain
       POSTGRES_DB_HOST: postgres
       POSTGRES_DB_PORT: 5432
-      LOGGING_LEVEL_ORG_KEYCLOAK: INFO
-      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY: INFO
-
+      POSTGRES_DB_NAME: cloudtrain
+      POSTGRES_DB_USER: postgres
+      POSTGRES_DB_PASSWORD: changeit
     depends_on:
       - postgres
 

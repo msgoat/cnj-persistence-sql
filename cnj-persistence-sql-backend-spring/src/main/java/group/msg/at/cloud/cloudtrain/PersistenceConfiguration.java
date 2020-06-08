@@ -38,8 +38,7 @@ public class PersistenceConfiguration {
             Optional<String> result = Optional.of("anonymous");
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication.isAuthenticated()) {
-                Principal principal = (Principal) authentication.getPrincipal();
-                result = Optional.of(principal.getName());
+                result = Optional.of(authentication.getName());
             }
             return result;
         }

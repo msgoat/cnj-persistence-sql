@@ -10,8 +10,6 @@ services:
 
   postgres:
     image: postgres:11-alpine
-    #    ports:
-    #      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: changeit
@@ -21,12 +19,12 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
   backend:
-    image: docker.at.automotive.msg.team/cloudtrain/cnj-persistence-sql-backend-javaee:latest
+    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-persistence-sql-backend-javaee:latest
     ports:
-      - "8080:8080"
+      - "38080:8080"
     environment:
-      MP_JWT_VERIFY_PUBLICKEY_LOCATION: "http://k8sapps.at.automotive.msg.team/auth/realms/cloudtrain/protocol/openid-connect/certs"
-      MP_JWT_VERIFY_ISSUER: "http://k8sapps.at.automotive.msg.team/auth/realms/cloudtrain"
+      MP_JWT_VERIFY_PUBLICKEY_LOCATION: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain/protocol/openid-connect/certs"
+      MP_JWT_VERIFY_ISSUER: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain"
       POSTGRES_DB_USER: postgres
       POSTGRES_DB_PASSWORD: changeit
       POSTGRES_DB_NAME: cloudtrain
