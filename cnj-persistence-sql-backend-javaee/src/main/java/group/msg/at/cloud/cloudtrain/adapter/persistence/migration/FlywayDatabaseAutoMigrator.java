@@ -6,6 +6,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.sql.DataSource;
 
 /**
@@ -17,6 +19,7 @@ import javax.sql.DataSource;
  */
 @Startup
 @Singleton
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class FlywayDatabaseAutoMigrator {
 
     @Resource(lookup = "jdbc/cnj-postgres-datasource")

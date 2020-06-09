@@ -638,6 +638,7 @@
         <profile>
             <id>integration-test-stage</id>
             <properties>
+                <maven.install.skip>true</maven.install.skip>
                 <k8s.cluster.namespace>cloudtrain-int</k8s.cluster.namespace>
             </properties>
             <build>

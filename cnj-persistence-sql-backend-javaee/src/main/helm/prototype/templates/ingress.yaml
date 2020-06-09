@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "cnj-persistence-sql-backend-javaee.fullname" . -}}
+{{- $fullName := include "prototype.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
@@ -10,7 +10,7 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    {{- include "cnj-persistence-sql-backend-javaee.labels" . | nindent 4 }}
+    {{- include "prototype.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -27,17 +27,15 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- if empty .Values.ingress.host }}
-    - http:
-    {{- else }}
-    - host: {{ .Values.ingress.host | quote }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
       http:
-    {{- end }}
         paths:
-          {{- range .Values.ingress.paths }}
+          {{- range .paths }}
           - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}
               servicePort: {{ $svcPort }}
           {{- end }}
+    {{- end }}
   {{- end }}

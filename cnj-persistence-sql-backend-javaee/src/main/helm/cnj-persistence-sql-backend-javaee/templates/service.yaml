@@ -3,10 +3,7 @@ kind: Service
 metadata:
   name: {{ include "cnj-persistence-sql-backend-javaee.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "cnj-persistence-sql-backend-javaee.name" . }}
-    helm.sh/chart: {{ include "cnj-persistence-sql-backend-javaee.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- include "cnj-persistence-sql-backend-javaee.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -15,5 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ include "cnj-persistence-sql-backend-javaee.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "cnj-persistence-sql-backend-javaee.selectorLabels" . | nindent 6 }}

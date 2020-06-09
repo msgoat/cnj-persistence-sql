@@ -30,3 +30,36 @@ Create chart name and version as used by the chart label.
 {{- define "cnj-persistence-sql-backend-javaee.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+
+{{/*
+Common labels
+*/}}
+{{- define "cnj-persistence-sql-backend-javaee.labels" -}}
+helm.sh/chart: {{ include "cnj-persistence-sql-backend-javaee.chart" . }}
+{{ include "cnj-persistence-sql-backend-javaee.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/part-of: {{ include "cnj-persistence-sql-backend-javaee.partOf" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "cnj-persistence-sql-backend-javaee.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "cnj-persistence-sql-backend-javaee.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Part-of label value
+*/}}
+{{- define "cnj-persistence-sql-backend-javaee.partOf" -}}
+{{- if .Values.partOfOverride -}}
+{{- .Values.partOfOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
