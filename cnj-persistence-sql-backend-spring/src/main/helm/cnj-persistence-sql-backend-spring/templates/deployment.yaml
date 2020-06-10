@@ -38,9 +38,9 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: cloud
             - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI
-              value: {{ .Values.oidc.jwksUri | quote }}
+              value: {{ .Values.security.oidc.jwksUri | quote }}
             - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
-              value: {{ .Values.oidc.issuer | quote }}
+              value: {{ .Values.security.oidc.issuer | quote }}
             - name: POSTGRES_DB_USER
               value: {{ .Values.persistence.postgres.user }}
             - name: POSTGRES_DB_PASSWORD

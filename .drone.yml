@@ -24,20 +24,20 @@ steps:
     privileged: true
     commands:
       - start-docker.sh
-      - mvn clean deploy -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dchangelist=.${DRONE_BRANCH}
+      - mvn clean deploy -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dchangelist=.${DRONE_BRANCH} -Dsha=.${DRONE_COMMIT_SHA:0:8}
   - name: micro-integration-test-stage
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     privileged: true
     commands:
       - start-docker.sh
-      - mvn clean verify -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dchangelist=.${DRONE_BRANCH}
+      - mvn clean verify -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dchangelist=.${DRONE_BRANCH} -Dsha=.${DRONE_COMMIT_SHA:0:8}
   - name: spring-commit-stage
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     privileged: true
     commands:
       - start-docker.sh
-      - mvn clean deploy -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dchangelist=.${DRONE_BRANCH}
+      - mvn clean deploy -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dchangelist=.${DRONE_BRANCH} -Dsha=.${DRONE_COMMIT_SHA:0:8}
   - name: spring-integration-test-stage
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     commands:
-      - mvn clean verify -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dchangelist=.${DRONE_BRANCH}
+      - mvn clean verify -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dchangelist=.${DRONE_BRANCH} -Dsha=.${DRONE_COMMIT_SHA:0:8}
