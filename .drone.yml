@@ -8,36 +8,36 @@ steps:
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     pull: always
     commands:
-      - mvn clean deploy -f cnj-persistence-sql-resources/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage
+      - mvn clean deploy -f cnj-persistence-sql-resources/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dchangelist=.${DRONE_BRANCH}
   - name: javaee-commit-stage
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     privileged: true
     commands:
       - start-docker.sh
-      - mvn clean deploy -f cnj-persistence-sql-backend-javaee/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dtest.target.route=http://localhost:38080
+      - mvn clean deploy -f cnj-persistence-sql-backend-javaee/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dchangelist=.${DRONE_BRANCH}
   - name: javaee-integration-test-stage
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     commands:
-      - mvn clean verify -f cnj-persistence-sql-backend-javaee/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage
+      - mvn clean verify -f cnj-persistence-sql-backend-javaee/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dchangelist=.${DRONE_BRANCH}
   - name: micro-commit-stage
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     privileged: true
     commands:
       - start-docker.sh
-      - mvn clean deploy -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dtest.target.route=http://localhost:38080
+      - mvn clean deploy -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dchangelist=.${DRONE_BRANCH}
   - name: micro-integration-test-stage
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     privileged: true
     commands:
       - start-docker.sh
-      - mvn clean verify -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage
+      - mvn clean verify -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dchangelist=.${DRONE_BRANCH}
   - name: spring-commit-stage
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     privileged: true
     commands:
       - start-docker.sh
-      - mvn clean deploy -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dtest.target.route=http://localhost:38080
+      - mvn clean deploy -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dchangelist=.${DRONE_BRANCH}
   - name: spring-integration-test-stage
     image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     commands:
-      - mvn clean verify -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage
+      - mvn clean verify -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dchangelist=.${DRONE_BRANCH}
