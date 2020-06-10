@@ -95,6 +95,26 @@ public class TasksEndpointSystemTest {
         assertFalse(tasks.isEmpty(), "GET must return at least one task");
     }
 
+    // @Test
+    public void addTaskWithForwardedHeadersMustReturnExpectedLocation() {
+        Response postResponse = given().auth().oauth2(fixture.getAccessToken())
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .header("X-Forwarded-Host", "apps.at41tools.k8s.aws.msgoat.eu")
+                .header("X-Forwarded-Proto", "https")
+                .header("X-Forwarded-Prefix", "/cloudtrain-int/cnj-persistence-sql-backend-micro")
+                .body(createTask().toString())
+                .post("api/v1/tasks")
+                .andReturn();
+        String location = postResponse.header("location");
+        System.out.println("location: [" + location + "]");
+        if (location != null) {
+            this.trashBin.add(location);
+        }
+        postResponse.then().assertThat()
+                .statusCode(201);
+    }
+
     private String addTask(JsonObject newTask) {
         Response postResponse = given().auth().oauth2(fixture.getAccessToken())
                 .accept(ContentType.JSON)
@@ -110,6 +130,7 @@ public class TasksEndpointSystemTest {
                 .statusCode(201);
         return location;
     }
+
 
     private JsonObject createTask() {
         return Json.createObjectBuilder()

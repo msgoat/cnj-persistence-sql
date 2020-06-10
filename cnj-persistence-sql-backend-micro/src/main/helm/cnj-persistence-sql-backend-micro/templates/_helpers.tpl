@@ -30,3 +30,36 @@ Create chart name and version as used by the chart label.
 {{- define "cnj-persistence-sql-backend-micro.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+
+{{/*
+Common labels
+*/}}
+{{- define "cnj-persistence-sql-backend-micro.labels" -}}
+helm.sh/chart: {{ include "cnj-persistence-sql-backend-micro.chart" . }}
+{{ include "cnj-persistence-sql-backend-micro.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/part-of: {{ include "cnj-persistence-sql-backend-micro.partOf" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "cnj-persistence-sql-backend-micro.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "cnj-persistence-sql-backend-micro.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Part-of label value
+*/}}
+{{- define "cnj-persistence-sql-backend-micro.partOf" -}}
+{{- if .Values.partOfOverride -}}
+{{- .Values.partOfOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}

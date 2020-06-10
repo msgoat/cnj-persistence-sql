@@ -1,49 +1,43 @@
-pipeline:
-  test-commit-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
+---
+kind: pipeline
+type: kubernetes
+name: cnj-persistence-sql-build
+
+steps:
+  - name: resources-integration-test-stage
+    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
+    pull: always
     commands:
-      - mvn clean deploy -f cnj-persistence-sql-backend-test/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage
-  database-commit-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
+      - mvn clean deploy -f cnj-persistence-sql-resources/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage
+  - name: javaee-commit-stage
+    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
+    privileged: true
     commands:
-      - mvn clean deploy -f cnj-persistence-sql-database/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage
-  database-integration-test-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
+      - start-docker.sh
+      - mvn clean deploy -f cnj-persistence-sql-backend-javaee/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dtest.target.route=http://localhost:38080
+  - name: javaee-integration-test-stage
+    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     commands:
-      - mvn clean verify -f cnj-persistence-sql-database/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage
-  javaee-commit-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
+      - mvn clean verify -f cnj-persistence-sql-backend-javaee/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage
+  - name: micro-commit-stage
+    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
+    privileged: true
     commands:
-      - mvn clean deploy -f cnj-persistence-sql-backend-javaee/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage
-  javaee-dockerize-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
+      - start-docker.sh
+      - mvn clean deploy -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dtest.target.route=http://localhost:38080
+  - name: micro-integration-test-stage
+    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
+    privileged: true
     commands:
-      - mvn clean install -f cnj-persistence-sql-backend-javaee/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles dockerize-stage -Dtest.target.route=http://10.118.17.191:8080
-  javaee-integration-test-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
+      - start-docker.sh
+      - mvn clean verify -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage
+  - name: spring-commit-stage
+    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
+    privileged: true
     commands:
-      - mvn clean verify -f cnj-persistence-sql-backend-javaee/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dtest.target.route=http://k8sapps.at.automotive.msg.team/cnj-persistence-sql-backend-javaee
-  micro-commit-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
+      - start-docker.sh
+      - mvn clean deploy -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage -Dtest.target.route=http://localhost:38080
+  - name: spring-integration-test-stage
+    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-build:1.0.0
     commands:
-      - mvn clean deploy -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage
-  micro-dockerize-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
-    commands:
-      - mvn clean install -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles dockerize-stage -Dtest.target.route=http://10.118.17.191:8080
-  micro-integration-test-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
-    commands:
-      - mvn clean verify -f cnj-persistence-sql-backend-micro/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dtest.target.route=http://k8sapps.at.automotive.msg.team/cnj-persistence-sql-backend-micro
-  spring-commit-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
-    commands:
-      - mvn clean deploy -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles commit-stage
-  spring-dockerize-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
-    commands:
-      - mvn clean install -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles dockerize-stage -Dtest.target.route=http://10.118.17.191:8080
-  spring-integration-test-stage:
-    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-drone-mvn-k8s
-    commands:
-      - mvn clean verify -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage -Dtest.target.route=http://k8sapps.at.automotive.msg.team/cnj-persistence-sql-backend-spring
+      - mvn clean verify -f cnj-persistence-sql-backend-spring/pom.xml --batch-mode --fail-fast --errors -V -U -Dsurefire.useFile=false --activate-profiles integration-test-stage

@@ -2,6 +2,7 @@ package group.msg.at.cloud.cloudtrain.adapter.rest;
 
 import group.msg.at.cloud.cloudtrain.core.boundary.TaskManagement;
 import group.msg.at.cloud.cloudtrain.core.entity.Task;
+import group.msg.at.cloud.common.web.jaxrs.RouterAwareUriBuilderFactory;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;

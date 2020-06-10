@@ -12,6 +12,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+import group.msg.at.cloud.common.web.jaxrs.RouterAwareUriBuilderFactory;
+
 /**
  * REST endpoint managing {@link Task} entities.
  * <p>
@@ -60,7 +62,7 @@ public class TasksResource {
     public Response addTask(Task task) {
         Response result;
         UUID taskId = this.boundary.addTask(task);
-        URI location = RouterAwareUriBuilderFactory.from(this.uriInfo, this.httpHeaders).path("{taskId}").build(taskId);
+        URI location = RouterAwareUriBuilderFactory.from(uriInfo, httpHeaders).path("{taskId}").build(taskId);
         result = Response.created(location).build();
         return result;
     }

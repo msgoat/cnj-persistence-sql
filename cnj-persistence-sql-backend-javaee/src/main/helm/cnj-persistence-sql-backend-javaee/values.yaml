@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: ${docker.image.name}
   tag: ${project.version}
-  pullPolicy: Always #IfNotPresent
+  pullPolicy: IfNotPresent
 
 probes:
   readiness:
@@ -37,14 +37,14 @@ resources:
     cpu: 100m
     memory: 756Mi
 
-# security configuration (MP JWT AUTH)
-mp:
-  jwt:
-    verifyPublicKeyLocation: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain/protocol/openid-connect/certs"
-    verifyIssuer: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain"
+# security configuration (Open ID Connect)
+security:
+  oidc:
+    jwksUri: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain/protocol/openid-connect/certs"
+    issuer: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain"
 
-# database configuration
-database:
+# persistence configuration (PostgreSQL)
+persistence:
   postgres:
     user: postgres
     database: cloudtrain

@@ -5,10 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-persistence-sql-backend-micro
-  tag: latest
-  pullPolicy: Always
-#  pullSecret: fwp-pull-secret
+  repository: ${docker.image.name}
+  tag: ${project.version}
+  pullPolicy: Always #IfNotPresent
 
 probes:
   readiness:
@@ -18,6 +17,7 @@ probes:
 
 nameOverride: ""
 fullnameOverride: ""
+partOfOverride: "cnj-persistence-sql"
 
 service:
   type: ClusterIP
@@ -27,49 +27,30 @@ ingress:
   enabled: true
   annotations:
     traefik.frontend.rule.type: PathPrefixStrip
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: ""
-      paths: ["/cnj-persistence-sql-backend-micro"]
+  host: "${k8s.ingress.host}"
+  paths: ["${k8s.ingress.path}"]
 
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+resources:
+  limits:
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 756Mi
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+# security configuration (Open ID Connect)
+security:
+  oidc:
+    jwksUri: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain/protocol/openid-connect/certs"
+    issuer: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain"
 
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
-# security configuration (MP JWT AUTH)
-mp:
-  jwt:
-    verifyPublicKeyLocation: "http://k8sapps.at.automotive.msg.team/auth/realms/cloudtrain/protocol/openid-connect/certs"
-    verifyIssuer: "http://k8sapps.at.automotive.msg.team/auth/realms/cloudtrain"
-
-# database configuration
-database:
+# persistence configuration (PostgreSQL)
+persistence:
   postgres:
-    name: cloudtrain
-    host: cnj-persistence-sql-database-postgresql
+    user: postgres
+    database: cloudtrain
+    host: cnj-persistence-sql-resources-postgresql
     port: 5432
     secret:
-      name: cnj-persistence-sql-database-postgresql
+      name: cnj-persistence-sql-resources-postgresql
       keys:
-        user: postgresql-username
         password: postgresql-password
