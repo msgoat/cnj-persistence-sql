@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: ${docker.image.name}
   tag: ${project.version}
-  pullPolicy: Always #IfNotPresent
+  pullPolicy: IfNotPresent
 
 probes:
   readiness:

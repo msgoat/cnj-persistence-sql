@@ -7,13 +7,13 @@ replicaCount: 1
 image:
   repository: ${docker.image.name}
   tag: ${project.version}
-  pullPolicy: Always #IfNotPresent
+  pullPolicy: IfNotPresent
 
 probes:
   readiness:
-    path: /api/v1/probes/readiness
+    path: /actuator/health
   liveness:
-    path: /api/v1/probes/liveness
+    path: /actuator/health
 
 nameOverride: ""
 fullnameOverride: ""
