@@ -5,7 +5,7 @@ package group.msg.at.cloud.cloudtrain.core.entity;
  *
  * @author Michael Theis (mtheis@msg.group)
  * @version 1.0
- * @since release 1.0
+ * @since release 1.0 31.10.2012 11:39:50
  */
 public enum TaskLifeCycleState {
     /**

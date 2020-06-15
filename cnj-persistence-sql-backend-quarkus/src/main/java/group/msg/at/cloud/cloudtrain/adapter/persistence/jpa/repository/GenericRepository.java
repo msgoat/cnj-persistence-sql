@@ -2,7 +2,7 @@ package group.msg.at.cloud.cloudtrain.adapter.persistence.jpa.repository;
 
 import group.msg.at.cloud.common.persistence.jpa.repository.AbstractGenericRepository;
 
-import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
  * @version 1.0
  * @since release 1.0
  */
-@Stateless
+@Dependent
 public class GenericRepository extends AbstractGenericRepository {
 
     /**

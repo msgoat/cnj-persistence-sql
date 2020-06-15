@@ -2,17 +2,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>group.msg.at.cloud</groupId>
-    <artifactId>cnj-persistence-sql-backend-micro</artifactId>
+    <artifactId>cnj-persistence-sql-backend-quarkus</artifactId>
     <version>${revision}${sha1}${changelist}</version>
-    <packaging>war</packaging>
-    <description>Cloud native Java backend using JPA for persistence based on Eclipse Microprofile</description>
+    <packaging>jar</packaging>
+    <description>Cloud native Java backend using JPA for persistence based on Quarkus</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- runtime related properties -->
         <java.version>11</java.version>
         <javaee.version>8.0.1</javaee.version>
-        <payara.version>5.201</payara.version>
+        <quarkus.version>1.5.0.Final</quarkus.version>
         <microprofile.version>3.2</microprofile.version>
         <postgres.jdbc.version>42.2.10</postgres.jdbc.version>
         <!-- common logging dependencies -->
@@ -57,13 +57,13 @@
         <maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
         <!-- pinning versions of application type specific maven plugins -->
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
-        <maven.payara.micro.plugin.version>1.0.6</maven.payara.micro.plugin.version>
+        <maven.quarkus.plugin.version>1.5.0.Final</maven.quarkus.plugin.version>
         <!-- pinning versions of cloud native specific maven plugins -->
         <maven.compose.plugin.version>1.0.0</maven.compose.plugin.version>
         <maven.docker.plugin.version>0.33.0</maven.docker.plugin.version>
         <maven.helm.plugin.version>2.0.1</maven.helm.plugin.version>
         <!-- new Maven version management -->
-        <revision>4.0.0</revision>
+        <revision>1.0.0</revision>
         <sha1></sha1>
         <changelist></changelist>
     </properties>
@@ -76,12 +76,13 @@
                 <version>${javaee.version}</version>
                 <scope>compile</scope>
             </dependency>
-            <!-- Payara Micro Profile (to be used as test runtime only!) -->
+            <!-- Quarkus build time and runtime dependencies -->
             <dependency>
-                <groupId>fish.payara.extras</groupId>
-                <artifactId>payara-micro</artifactId>
-                <version>${payara.version}</version>
-                <scope>test</scope>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
             <!-- Eclipse MicroProfile runtime dependencies -->
             <dependency>
@@ -107,18 +108,40 @@
         <!-- =========================== -->
         <!-- common dependencies section -->
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <scope>provided</scope>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-undertow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jsonb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-agroal</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jdbc-postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-flyway</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
@@ -127,10 +150,12 @@
             <version>${common.web.version}</version>
         </dependency>
         <!-- showcase specific section -->
+        <!--
         <dependency>
             <groupId>org.eclipse.microprofile.jwt</groupId>
             <artifactId>microprofile-jwt-auth-api</artifactId>
         </dependency>
+        -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -149,11 +174,6 @@
         <!-- =========================== -->
         <!-- test time dependencies      -->
         <!-- =========================== -->
-        <dependency>
-            <groupId>fish.payara.extras</groupId>
-            <artifactId>payara-micro</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -256,9 +276,9 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>fish.payara.maven.plugins</groupId>
-                    <artifactId>payara-micro-maven-plugin</artifactId>
-                    <version>${maven.payara.micro.plugin.version}</version>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-maven-plugin</artifactId>
+                    <version>${maven.quarkus.plugin.version}</version>
                 </plugin>
                 <!-- cloud native specific maven plugins section -->
                 <plugin>
@@ -345,19 +365,16 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>fish.payara.maven.plugins</groupId>
-                        <artifactId>payara-micro-maven-plugin</artifactId>
+                        <groupId>io.quarkus</groupId>
+                        <artifactId>quarkus-maven-plugin</artifactId>
                         <executions>
                             <execution>
                                 <goals>
-                                    <goal>bundle</goal>
+                                    <goal>build</goal>
                                 </goals>
-                                <phase>package</phase>
+                                <!-- <phase>package</phase> -->
                             </execution>
                         </executions>
-                        <configuration>
-                            <payaraVersion>${payara.version}</payaraVersion>
-                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -378,7 +395,7 @@
                                         <resource>
                                             <directory>${project.build.directory}</directory>
                                             <includes>
-                                                <include>*-microbundle.jar</include>
+                                                <include>*-runner.jar</include>
                                             </includes>
                                         </resource>
                                     </resources>
@@ -510,19 +527,16 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>fish.payara.maven.plugins</groupId>
-                        <artifactId>payara-micro-maven-plugin</artifactId>
+                        <groupId>io.quarkus</groupId>
+                        <artifactId>quarkus-maven-plugin</artifactId>
                         <executions>
                             <execution>
                                 <goals>
-                                    <goal>bundle</goal>
+                                    <goal>build</goal>
                                 </goals>
-                                <phase>package</phase>
+                                <!-- <phase>package</phase> -->
                             </execution>
                         </executions>
-                        <configuration>
-                            <payaraVersion>${payara.version}</payaraVersion>
-                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -543,7 +557,7 @@
                                         <resource>
                                             <directory>${project.build.directory}</directory>
                                             <includes>
-                                                <include>*-microbundle.jar</include>
+                                                <include>*-runner.jar</include>
                                             </includes>
                                         </resource>
                                     </resources>

@@ -25,7 +25,7 @@
         <!-- common persistence dependencies -->
         <flyway.version>6.4.2</flyway.version>
         <postgres.jdbc.version>42.2.12</postgres.jdbc.version>
-        <common.persistence.jpa.version>2.0.1</common.persistence.jpa.version>
+        <common.persistence.jpa.version>2.1.0</common.persistence.jpa.version>
         <!-- docker related properties -->
         <docker.registry.name>docker.at41tools.k8s.aws.msgoat.eu</docker.registry.name>
         <docker.organization.name>cloudtrain</docker.organization.name>

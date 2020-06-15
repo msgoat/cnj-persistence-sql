@@ -15,6 +15,7 @@
         <module>cnj-persistence-sql-backend-javaee</module>
         <module>cnj-persistence-sql-backend-micro</module>
         <module>cnj-persistence-sql-backend-spring</module>
+        <module>cnj-persistence-sql-backend-quarkus</module>
     </modules>
     <distributionManagement>
         <repository>

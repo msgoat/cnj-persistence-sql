@@ -13,7 +13,7 @@ import java.util.UUID;
  *
  * @author Michael Theis (mtheis@msg.group)
  * @version 1.0
- * @since release 1.0
+ * @since release 1.0 29.10.2012 17:27:22
  */
 @Entity
 @Table(name = "T_TASK")
@@ -365,9 +365,7 @@ public class Task extends AbstractAuditableEntity {
         if (getClass() != obj.getClass())
             return false;
         Task other = (Task) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return id == other.id;
     }
 
     /**

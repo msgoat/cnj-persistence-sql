@@ -4,11 +4,15 @@ Showcase of a simple cloud native Java application using JPA-based persistence t
 a PostgreSQL database.
 
 The actual integration of JPA-based persistence is demonstrated with three different Java backend technologies:
-* Java EE (see: cnj-persistence-sql-backend-javaee)
-* Eclipse MicroProfile (see: cnj-persistence-sql-backend-micro)
-* Spring Boot + Spring Data (see: cnj-persistence-sql-backend-spring)
 
-In this showcase, KeyCloak is used as an OpenID Connect Authentication Provider. 
+* Java EE (see: [cnj-persistence-sql-backend-javaee](cnj-persistence-sql-backend-javaee/README.md))
+* Eclipse MicroProfile (see: [cnj-persistence-sql-backend-micro](cnj-persistence-sql-backend-micro/README.md))
+* Spring Boot + Spring Data (see: [cnj-persistence-sql-backend-spring](cnj-persistence-sql-backend-spring/README.md))
+* Quarkus (see: [cnj-persistence-sql-backend-quarkus](cnj-persistence-sql-backend-quarkus/README.md))
+
+All showcases use a common resources container project, which deploys all attached resources to Kubernetes (see: [cnj-persistence-sql-resources](cnj-persistence-sql-resources/README.md)])
+
+In this showcase, PostgreSQL is used as the common RDBMS. 
 
 ## Status
 ![Build status](https://drone.at.automotive.msg.team/api/badges/cloudtrain/cnj-persistence-sql/status.svg)
@@ -21,7 +25,7 @@ In order to run the build, you have to install the following tools locally:
 * Docker
 * Docker Compose 
 * Maven
-* Java JDK 8
+* Java JDK 11   
 
 ### Run Maven
 

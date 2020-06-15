@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author Michael Theis (mtheis@msg.group)
  * @version 1.0
- * @since release SS2019
+ * @since release 1.0
  */
 @Stateless
 public class GenericRepository extends AbstractGenericRepository {
