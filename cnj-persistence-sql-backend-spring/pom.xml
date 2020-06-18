@@ -19,7 +19,7 @@
         <!-- common test dependencies -->
         <junit.version>5.6.0</junit.version>
         <restassured.version>3.3.0</restassured.version>
-        <cnj.common.test.version>1.4.0</cnj.common.test.version>
+        <cnj.common.test.version>2.0.0</cnj.common.test.version>
         <!-- common persistence dependencies -->
         <flyway.version>6.4.2</flyway.version>
         <postgres.jdbc.version>42.2.12</postgres.jdbc.version>

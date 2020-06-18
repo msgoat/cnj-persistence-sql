@@ -22,7 +22,7 @@
         <!-- common test dependencies -->
         <junit.version>5.6.0</junit.version>
         <restassured.version>3.3.0</restassured.version>
-        <cnj.common.test.version>1.4.0</cnj.common.test.version>
+        <cnj.common.test.version>2.0.0</cnj.common.test.version>
         <!-- common persistence dependencies -->
         <flyway.version>6.4.2</flyway.version>
         <postgres.jdbc.version>42.2.12</postgres.jdbc.version>
@@ -112,6 +112,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.microprofile.openapi</groupId>
+            <artifactId>microprofile-openapi-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.jwt</groupId>
+            <artifactId>microprofile-jwt-auth-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
@@ -127,10 +135,6 @@
             <version>${common.web.version}</version>
         </dependency>
         <!-- showcase specific section -->
-        <dependency>
-            <groupId>org.eclipse.microprofile.jwt</groupId>
-            <artifactId>microprofile-jwt-auth-api</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
