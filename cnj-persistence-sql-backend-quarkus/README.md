@@ -1,6 +1,6 @@
-# cnj-persistence-sql-backend-micro
+# cnj-persistence-sql-backend-quarkus
 
-Cloud native MicroProfile backend using JPA-based persistence to persist its domain model in a PostgreSQL database.
+Cloud native Quarkus backend using JPA-based persistence to persist its domain model in a PostgreSQL database.
 
 ## Build this application 
 
