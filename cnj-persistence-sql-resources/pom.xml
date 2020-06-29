@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>group.msg.at.cloud</groupId>
     <artifactId>cnj-persistence-sql-resources</artifactId>
-    <version>${revision}${sha1}${changelist}</version>
+    <version>${revision}${changelist}${sha1}</version>
     <packaging>pom</packaging>
     <description>All attached resources required for the Cloud Native Persistence Showcases</description>
     <properties>
