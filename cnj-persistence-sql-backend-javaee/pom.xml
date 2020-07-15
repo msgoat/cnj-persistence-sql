@@ -17,7 +17,7 @@
         <!-- common logging dependencies -->
         <slf4j.version>1.7.30</slf4j.version>
         <!-- common rest dependencies -->
-        <common.web.version>1.0.0</common.web.version>
+        <common.rest.version>1.0.0</common.rest.version>
         <!-- common test dependencies -->
         <junit.version>5.6.0</junit.version>
         <restassured.version>3.3.0</restassured.version>
@@ -110,12 +110,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.microprofile.openapi</groupId>
-            <artifactId>microprofile-openapi-api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.eclipse.microprofile.jwt</groupId>
             <artifactId>microprofile-jwt-auth-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.rest.client</groupId>
+            <artifactId>microprofile-rest-client-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.openapi</groupId>
+            <artifactId>microprofile-openapi-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -129,8 +133,8 @@
         </dependency>
         <dependency>
             <groupId>group.msg.at.cloud.common</groupId>
-            <artifactId>cnj-common-web</artifactId>
-            <version>${common.web.version}</version>
+            <artifactId>cnj-common-rest-jee</artifactId>
+            <version>${common.rest.version}</version>
         </dependency>
         <!-- showcase specific section -->
         <dependency>
@@ -318,6 +322,12 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
     <profiles>
         <!-- profile pre-commit-stage representing pre-commit-stage of local build -->

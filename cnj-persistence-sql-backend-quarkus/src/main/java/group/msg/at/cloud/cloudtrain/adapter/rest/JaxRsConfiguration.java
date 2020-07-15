@@ -11,7 +11,7 @@ import javax.ws.rs.core.Application;
  * and applies some configuration to the JAX-RS environment.
  */
 @ApplicationScoped
-@ApplicationPath("api")
+@ApplicationPath("/api")
 @LoginConfig(authMethod = "MP-JWT")
 public class JaxRsConfiguration extends Application {
 

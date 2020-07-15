@@ -12,7 +12,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- runtime related properties -->
         <java.version>11</java.version>
-        <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
+        <spring.boot.version>2.3.1.RELEASE</spring.boot.version>
         <!-- common logging dependencies -->
         <slf4j.version>1.7.30</slf4j.version>
         <logstash.logback.encoder.version>6.1</logstash.logback.encoder.version>
@@ -106,7 +106,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!-- showcase specific section -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -120,6 +119,12 @@
             <artifactId>cnj-common-security-oidc-spring</artifactId>
             <version>${common.security.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+        <!-- showcase specific section -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -313,8 +318,61 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
     <profiles>
+        <!-- profile local-stage -->
+        <!-- supposed to be run during local development -->
+        <!-- builds application and runs it -->
+        <profile>
+            <id>local-stage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*SystemTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>repackage</id>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                            <execution>
+                                <id>run-spring-application</id>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <profiles>
+                                        <profile>test</profile>
+                                    </profiles>
+                                    <systemPropertyVariables>
+                                        <cloudtrain.services.downstream.url>http://localhost:38090</cloudtrain.services.downstream.url>
+                                    </systemPropertyVariables>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <!-- profile pre-commit-stage representing pre-commit-stage of local build -->
         <!-- supposed to be run before each push to the central GIT repository -->
         <!-- builds application; runs unit tests on application; builds docker image; runs system tests on docker container -->

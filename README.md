@@ -3,7 +3,7 @@
 Showcase of a simple cloud native Java application using JPA-based persistence to persist its domain model in
 a PostgreSQL database.
 
-The actual integration of JPA-based persistence is demonstrated with three different Java backend technologies:
+The actual integration of JPA-based persistence is demonstrated with four different Java backend technologies:
 
 * Java EE (see: [cnj-persistence-sql-backend-javaee](cnj-persistence-sql-backend-javaee/README.md))
 * Eclipse MicroProfile (see: [cnj-persistence-sql-backend-micro](cnj-persistence-sql-backend-micro/README.md))
