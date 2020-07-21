@@ -769,6 +769,7 @@
                                     <releaseName>${project.artifactId}</releaseName>
                                     <namespace>${k8s.cluster.namespace}</namespace>
                                     <debug>true</debug>
+                                    <timeout>120s</timeout>
                                 </configuration>
                             </execution>
                             <!--
@@ -803,7 +804,8 @@
                                         <include>**/*SystemTest.java</include>
                                     </includes>
                                     <systemPropertyVariables>
-                                        <test.target.route>${docker.test.target.route}</test.target.route>
+                                        <test.target.route>${k8s.test.target.route}</test.target.route>
+                                        <test.target.readinessProbe.initialDelaySeconds>0</test.target.readinessProbe.initialDelaySeconds>
                                     </systemPropertyVariables>
                                 </configuration>
                             </execution>
