@@ -24,7 +24,7 @@
         <flyway.version>6.4.2</flyway.version>
         <postgres.jdbc.version>42.2.12</postgres.jdbc.version>
         <!-- common security dependencies -->
-        <common.security.version>1.1.0</common.security.version>
+        <common.security.version>1.2.0</common.security.version>
         <!-- docker related properties -->
         <docker.registry.name>docker.at41tools.k8s.aws.msgoat.eu</docker.registry.name>
         <docker.organization.name>cloudtrain</docker.organization.name>
@@ -60,7 +60,7 @@
         <maven.docker.plugin.version>0.33.0</maven.docker.plugin.version>
         <maven.helm.plugin.version>2.0.1</maven.helm.plugin.version>
         <!-- new Maven version management -->
-        <revision>4.0.0</revision>
+        <revision>4.0.1</revision>
         <sha1></sha1>
         <changelist></changelist>
     </properties>

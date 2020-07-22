@@ -2,6 +2,7 @@ package group.msg.at.cloud.cloudtrain.adapter.rest;
 
 import group.msg.at.cloud.cloudtrain.core.boundary.TaskManagement;
 import group.msg.at.cloud.cloudtrain.core.entity.Task;
+import group.msg.at.cloud.common.web.jaxrs.RouterAwareUriBuilderFactory;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
@@ -11,8 +12,6 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-
-import group.msg.at.cloud.common.web.jaxrs.RouterAwareUriBuilderFactory;
 
 /**
  * REST endpoint managing {@link Task} entities.

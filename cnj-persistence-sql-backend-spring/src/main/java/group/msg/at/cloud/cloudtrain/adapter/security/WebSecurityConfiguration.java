@@ -34,7 +34,7 @@ public class WebSecurityConfiguration extends AbstractOidcResourceServerConfigur
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorizeRequests -> authorizeRequests.antMatchers("/api/v1/hello").hasRole("CLOUDTRAIN_USER"))
+                .authorizeRequests(authorizeRequests -> authorizeRequests.antMatchers("/api/v1/tasks", "/api/v1/tasks/**").hasRole("CLOUDTRAIN_USER"))
                 .oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
     }
 }
