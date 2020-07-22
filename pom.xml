@@ -12,6 +12,7 @@
     </properties>
     <modules>
         <module>cnj-persistence-sql-resources</module>
+        <module>cnj-persistence-sql-downstream</module>
         <module>cnj-persistence-sql-backend-javaee</module>
         <module>cnj-persistence-sql-backend-micro</module>
         <module>cnj-persistence-sql-backend-spring</module>

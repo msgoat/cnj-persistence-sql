@@ -39,6 +39,8 @@ spec:
               value: {{ .Values.security.oidc.jwksUri | quote }}
             - name: MP_JWT_VERIFY_ISSUER
               value: {{ .Values.security.oidc.issuer | quote }}
+            - name: CLOUDTRAIN_SERVICES_GRANTEDPERMISSIONS_MP_REST_URL
+              value: {{ .Values.downstream.rest.url | quote }}
             - name: QUARKUS_DATASOURCE_USERNAME
               value: {{ .Values.persistence.postgres.user }}
             - name: QUARKUS_DATASOURCE_PASSWORD

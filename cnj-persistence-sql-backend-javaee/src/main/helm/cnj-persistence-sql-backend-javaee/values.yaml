@@ -43,6 +43,11 @@ security:
     jwksUri: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain/protocol/openid-connect/certs"
     issuer: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain"
 
+# downstream service configuration
+downstream:
+  rest:
+    url: "http://cnj-persistence-sql-downstream"
+
 # persistence configuration (PostgreSQL)
 persistence:
   postgres:

@@ -41,6 +41,8 @@ spec:
               value: {{ .Values.security.oidc.jwksUri | quote }}
             - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
               value: {{ .Values.security.oidc.issuer | quote }}
+            - name: CLOUDTRAIN_SERVICES_DOWNSTREAM_URL
+              value: {{ .Values.downstream.rest.url | quote }}
             - name: POSTGRES_DB_USER
               value: {{ .Values.persistence.postgres.user }}
             - name: POSTGRES_DB_PASSWORD

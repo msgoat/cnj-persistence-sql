@@ -1,12 +1,19 @@
 # docker-compose.yml
 # ----------------------------------------------------------------------------
-# Composes Docker containers and volumes to a runnable Java EE application
+# Composes Docker containers and volumes to a runnable Quarkus application
 # ----------------------------------------------------------------------------
 #
 ---
 version: '3'
 
 services:
+
+  downstream:
+    image: docker.at41tools.k8s.aws.msgoat.eu/cloudtrain/cnj-persistence-sql-downstream:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: cloud
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain
 
   postgres:
     image: postgres:11-alpine
@@ -25,10 +32,12 @@ services:
     environment:
       MP_JWT_VERIFY_PUBLICKEY_LOCATION: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain/protocol/openid-connect/certs"
       MP_JWT_VERIFY_ISSUER: "https://iam.at41tools.k8s.aws.msgoat.eu/auth/realms/cloudtrain"
+      CLOUDTRAIN_SERVICES_GRANTEDPERMISSIONS_MP_REST_URL: "http://downstream:8080"
       QUARKUS_DATASOURCE_USERNAME: postgres
       QUARKUS_DATASOURCE_PASSWORD: changeit
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgres:5432/cloudtrain
     depends_on:
+      - downstream
       - postgres
 
 volumes:

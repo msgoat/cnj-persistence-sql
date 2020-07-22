@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "cnj-persistence-sql-downstream.fullname" . }}-test-connection"
+  labels:
+    app.kubernetes.io/name: {{ include "cnj-persistence-sql-downstream.name" . }}
+    helm.sh/chart: {{ include "cnj-persistence-sql-downstream.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "cnj-persistence-sql-downstream.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

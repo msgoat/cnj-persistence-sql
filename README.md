@@ -15,7 +15,7 @@ All showcases use a common resources container project, which deploys all attach
 In this showcase, PostgreSQL is used as the common RDBMS. 
 
 ## Status
-![Build status](https://drone.at.automotive.msg.team/api/badges/cloudtrain/cnj-persistence-sql/status.svg)
+![Build status](https://drone.at.automotive.msg.team/api/badges/msgoat/cnj-persistence-sql/status.svg)
 
 ## Build this showcase 
 
