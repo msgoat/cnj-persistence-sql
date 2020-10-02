@@ -24,7 +24,7 @@
         <restassured.version>3.3.0</restassured.version>
         <cnj.common.test.version>2.0.0</cnj.common.test.version>
         <!-- common persistence dependencies -->
-        <flyway.version>6.4.2</flyway.version>
+        <flyway.version>6.5.7</flyway.version>
         <postgres.jdbc.version>42.2.12</postgres.jdbc.version>
         <common.persistence.jpa.version>2.1.0</common.persistence.jpa.version>
         <!-- docker related properties -->
