@@ -63,7 +63,7 @@
         <maven.docker.plugin.version>0.33.0</maven.docker.plugin.version>
         <maven.helm.plugin.version>2.0.1</maven.helm.plugin.version>
         <!-- new Maven version management -->
-        <revision>1.1.0</revision>
+        <revision>1.2.0</revision>
         <sha1></sha1>
         <changelist></changelist>
     </properties>
