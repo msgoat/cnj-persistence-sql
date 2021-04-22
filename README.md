@@ -17,6 +17,10 @@ In this showcase, PostgreSQL is used as the common RDBMS.
 ## Status
 ![Build status](https://drone.at.automotive.msg.team/api/badges/msgoat/cnj-persistence-sql/status.svg)
 
+## Release information
+
+Check [changelog](changelog.md) for latest version and release information.
+
 ## Build this showcase 
 
 ### Prerequisites

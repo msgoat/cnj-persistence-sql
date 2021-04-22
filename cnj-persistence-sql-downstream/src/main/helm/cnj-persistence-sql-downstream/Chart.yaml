@@ -1,5 +1,0 @@
-apiVersion: v2
-appVersion: "${project.version}"
-description: "${project.description}"
-name: cnj-persistence-sql-downstream
-version: 1.0.0

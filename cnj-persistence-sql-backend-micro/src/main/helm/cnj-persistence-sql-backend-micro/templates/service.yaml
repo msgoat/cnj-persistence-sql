@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "cnj-persistence-sql-backend-micro.selectorLabels" . | nindent 6 }}
+    {{- include "cnj-persistence-sql-backend-micro.selectorLabels" . | nindent 4 }}
