@@ -9,7 +9,7 @@ version: '3'
 services:
 
   downstream:
-    image: docker.cloudtrain.aws.msgoat.eu/cloudtrain/cnj-persistence-sql-downstream:latest
+    image: docker.cloudtrain.aws.msgoat.eu/cloudtrain/cnj-persistence-sql-downstream-spring:latest
     environment:
       SPRING_PROFILES_ACTIVE: cloud
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: https://oidc.cloudtrain.aws.msgoat.eu/auth/realms/cloudtrain/protocol/openid-connect/certs
