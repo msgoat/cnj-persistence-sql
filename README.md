@@ -5,7 +5,6 @@ a PostgreSQL database.
 
 The actual integration of JPA-based persistence is demonstrated with four different Java backend technologies:
 
-* Java EE (see: [cnj-persistence-sql-backend-javaee](cnj-persistence-sql-backend-javaee/README.md))
 * Eclipse MicroProfile (see: [cnj-persistence-sql-backend-micro](cnj-persistence-sql-backend-micro/README.md))
 * Spring Boot + Spring Data (see: [cnj-persistence-sql-backend-spring](cnj-persistence-sql-backend-spring/README.md))
 * Quarkus (see: [cnj-persistence-sql-backend-quarkus](cnj-persistence-sql-backend-quarkus/README.md))

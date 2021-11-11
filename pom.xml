@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>group.msg.at.cloud</groupId>
     <artifactId>cnj-persistence-sql</artifactId>
-    <version>4.1.0</version>
+    <version>5.0.0</version>
     <packaging>pom</packaging>
     <description>Cloud native Java applications showcase for persistence using relational databases</description>
     <properties>
@@ -13,7 +13,6 @@
     <modules>
         <module>cnj-persistence-sql-resources</module>
         <module>cnj-persistence-sql-downstream-spring</module>
-        <module>cnj-persistence-sql-backend-javaee</module>
         <module>cnj-persistence-sql-backend-micro</module>
         <module>cnj-persistence-sql-backend-spring</module>
         <module>cnj-persistence-sql-backend-quarkus</module>
