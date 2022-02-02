@@ -14,7 +14,7 @@
         <javaee.version>8.0.1</javaee.version>
         <payara.version>5.2020.4</payara.version>
         <microprofile.version>3.3</microprofile.version>
-        <postgres.jdbc.version>42.2.10</postgres.jdbc.version>
+        <postgres.jdbc.version>42.2.25</postgres.jdbc.version>
         <!-- common logging dependencies -->
         <slf4j.version>1.7.30</slf4j.version>
         <!-- common rest dependencies -->
